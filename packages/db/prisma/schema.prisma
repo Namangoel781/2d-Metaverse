@@ -4,8 +4,6 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,23 +16,22 @@ datasource db {
 model User {
   id       String  @id @unique @default(cuid())
   username String  @unique
-  password String  @unique
+  password String
   avatarId String?
   role     Role
   spaces   Space[]
-  avatar   Avatar? @relation(fields: [avatarId], references: [id])
+  avatar    Avatar? @relation(fields: [avatarId], references: [id])
 }
 
 model Space {
   id        String  @id @unique @default(cuid())
   name      String
   width     Int
-  height    Int?
+  height    Int
   thumbnail String?
   creatorId String
-  creator   User    @relation(fields: [creatorId], references: [id])
-  element   spaceElements[]
-
+  creator     User    @relation(fields: [creatorId], references: [id])
+  elements  spaceElements[]
 }
 
 model spaceElements {
@@ -48,12 +45,13 @@ model spaceElements {
 }
 
 model Element {
-  id               String @id @unique @default(cuid())
-  width            Int
-  height           Int
-  imageUrl         String
-  space            spaceElements[]
-  mapsElements     MapElements[]
+  id              String @id @unique @default(cuid())
+  width           Int
+  height          Int
+  static          Boolean
+  imageUrl        String
+  spaces          spaceElements[]
+  mapElements     MapElements[]
 }
 
 model Map {
@@ -61,6 +59,7 @@ model Map {
   width  Int
   height Int
   name   String
+  thumbnail String
   mapElements MapElements[]
 }
 
