@@ -12,16 +12,11 @@ export const router = Router();
 
 router.post("/signup", async (req, res) => {
     console.log("inside signup")
-    console.log("Request body:", req.body);
-
     // check the user
     const parsedData = SignupSchema.safeParse(req.body)
     if (!parsedData.success) {
-      console.log("parsed data incorrect:", parsedData.error.format());
-      res.status(400).json({
-          message: "Validation failed",
-          errors: parsedData.error.issues,
-      });
+        console.log("parsed data incorrect")
+        res.status(400).json({message: "Validation failed"})
         return
     }
 
@@ -39,8 +34,9 @@ router.post("/signup", async (req, res) => {
             userId: user.id
         })
     } catch(e) {
-      console.log("Error thrown:", e);
-      res.status(400).json({ message: "User already exists" });
+        console.log("erroer thrown")
+        console.log(e)
+        res.status(400).json({message: "User already exists"})
     }
 })
 
@@ -82,9 +78,9 @@ router.post("/signin", async (req, res) => {
     }
 })
 
-router.get("/elements",async (req,res) => {
+router.get("/elements", async (req, res) => {
     const elements = await client.element.findMany()
-    
+
     res.json({elements: elements.map(e => ({
         id: e.id,
         imageUrl: e.imageUrl,
@@ -94,12 +90,12 @@ router.get("/elements",async (req,res) => {
     }))})
 })
 
-router.get("/avatars", async(req,res) => {
+router.get("/avatars", async (req, res) => {
     const avatars = await client.avatar.findMany()
     res.json({avatars: avatars.map(x => ({
         id: x.id,
         imageUrl: x.imageUrl,
-        name: x.name 
+        name: x.name
     }))})
 })
 

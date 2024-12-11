@@ -1,14 +1,14 @@
 import z from "zod";
 
 export const SignupSchema = z.object({
-    username: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    username: z.string(),
+    password: z.string(),
     type: z.enum(["user", "admin"]),
 })
 
 export const SigninSchema = z.object({
-    username: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    username: z.string(),
+    password: z.string(),
 })
 
 export const UpdateMetadataSchema = z.object({
